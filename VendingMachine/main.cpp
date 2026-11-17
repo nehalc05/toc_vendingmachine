@@ -3,11 +3,13 @@
 #include "Automaton.h"
 #include "Product.h"
 #include "PaymentManager.h"
+#include "TransactionManager.h"
 using namespace std;
 
 int main() {
 
     Automaton machine;
+    TransactionManager transactions;
     ProductManager products;
     PaymentManager payment;
 
@@ -65,17 +67,25 @@ int main() {
         machine.transition(CONFIRM);
 
         int change = payment.calculateChange(selected->price);
+int paid = payment.getBalance();
 
-        cout << "\nProduct: " << selected->name << endl;
-        cout << "Change returned: Rs." << change << endl;
+cout << "\nProduct: " << selected->name << endl;
+cout << "Change returned: Rs." << change << endl;
 
-        products.reduceStock(choice);
+products.reduceStock(choice);
 
+transactions.addTransaction(
+    selected->name,
+    selected->price,
+    paid,
+    change
+);
         machine.transition(SELECT_PRODUCT);
 
         payment.reset();
         machine.reset();
     }
+    transactions.displayTransactions();
 
     cout << "\nThank you for using the vending machine!" << endl;
 
