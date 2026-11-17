@@ -1,4 +1,3 @@
-
 #include "Automaton.h"
 #include <iostream>
 using namespace std;
@@ -11,8 +10,7 @@ State Automaton::getState() {
     return currentState;
 }
 
-
-void Automaton::transition(Input input) {
+void Automaton::transition(Input input, int balance, int price) {
 
     switch (currentState) {
 
@@ -29,8 +27,14 @@ void Automaton::transition(Input input) {
         case SELECTED:
             if (input == INSERT_5 || input == INSERT_10 ||
                 input == INSERT_20 || input == INSERT_50) {
+
                 currentState = PAYMENT;
                 cout << "Payment started." << endl;
+
+                if (balance >= price) {
+                    currentState = SUFFICIENT;
+                    cout << "Payment sufficient." << endl;
+                }
             }
             else if (input == CANCEL) {
                 currentState = IDLE;
@@ -44,11 +48,13 @@ void Automaton::transition(Input input) {
         case PAYMENT:
             if (input == INSERT_5 || input == INSERT_10 ||
                 input == INSERT_20 || input == INSERT_50) {
+
                 cout << "Coin accepted." << endl;
-            }
-            else if (input == CONFIRM) {
-                currentState = SUFFICIENT;
-                cout << "Payment sufficient." << endl;
+
+                if (balance >= price) {
+                    currentState = SUFFICIENT;
+                    cout << "Payment sufficient." << endl;
+                }
             }
             else if (input == CANCEL) {
                 currentState = REFUNDING;
@@ -88,4 +94,7 @@ void Automaton::transition(Input input) {
             cout << "Transaction completed." << endl;
             break;
     }
+}
+void Automaton::reset() {
+    currentState = IDLE;
 }

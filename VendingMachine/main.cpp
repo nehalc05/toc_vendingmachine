@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "Automaton.h"
 #include "Product.h"
@@ -41,6 +42,7 @@ int main() {
             cin >> coin;
 
             int previousBalance = payment.getBalance();
+
             payment.insertCoin(coin);
 
             if (payment.getBalance() == previousBalance) {
@@ -48,10 +50,14 @@ int main() {
                 continue;
             }
 
-            if (coin == 5) machine.transition(INSERT_5);
-            else if (coin == 10) machine.transition(INSERT_10);
-            else if (coin == 20) machine.transition(INSERT_20);
-            else if (coin == 50) machine.transition(INSERT_50);
+            if (coin == 5)
+                machine.transition(INSERT_5, payment.getBalance(), selected->price);
+            else if (coin == 10)
+                machine.transition(INSERT_10, payment.getBalance(), selected->price);
+            else if (coin == 20)
+                machine.transition(INSERT_20, payment.getBalance(), selected->price);
+            else if (coin == 50)
+                machine.transition(INSERT_50, payment.getBalance(), selected->price);
 
             cout << "Balance: Rs." << payment.getBalance() << endl;
         }
@@ -60,16 +66,15 @@ int main() {
 
         int change = payment.calculateChange(selected->price);
 
-        products.reduceStock(choice);
-
-        machine.transition(CONFIRM);
-
         cout << "\nProduct: " << selected->name << endl;
         cout << "Change returned: Rs." << change << endl;
 
-        payment.reset();
+        products.reduceStock(choice);
 
-        
+        machine.transition(SELECT_PRODUCT);
+
+        payment.reset();
+        machine.reset();
     }
 
     cout << "\nThank you for using the vending machine!" << endl;

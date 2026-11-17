@@ -1,4 +1,3 @@
-
 #ifndef AUTOMATON_H
 #define AUTOMATON_H
 
@@ -28,11 +27,9 @@ private:
 
 public:
     Automaton();
-
     State getState();
-
-    void transition(Input input);
-
+    void transition(Input input, int balance = 0, int price = 0);
+    void reset();
 };
 
 #endif
