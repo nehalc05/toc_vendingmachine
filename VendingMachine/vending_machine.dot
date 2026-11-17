@@ -1,0 +1,85 @@
+
+digraph VendingMachine {
+
+    rankdir=LR;
+
+    node [
+        shape=circle,
+        style=filled,
+        fillcolor=lightblue,
+        fontname="Arial"
+    ];
+
+    start [shape=point, fillcolor=black];
+
+    IDLE;
+    SELECTED;
+    PAYMENT;
+    SUFFICIENT;
+    DISPENSING;
+    REFUNDING;
+    COMPLETE;
+
+    start -> IDLE;
+
+    IDLE -> SELECTED [
+        label="SELECT_PRODUCT"
+    ];
+
+    SELECTED -> PAYMENT [
+        label="INSERT_COIN\nbalance < price"
+    ];
+
+    SELECTED -> SUFFICIENT [
+        label="INSERT_COIN\nbalance >= price"
+    ];
+
+    SELECTED -> IDLE [
+        label="CANCEL"
+    ];
+
+    PAYMENT -> PAYMENT [
+        label="INSERT_COIN\nbalance < price"
+    ];
+
+    PAYMENT -> SUFFICIENT [
+        label="INSERT_COIN\nbalance >= price"
+    ];
+
+    PAYMENT -> REFUNDING [
+        label="CANCEL"
+    ];
+
+    SUFFICIENT -> DISPENSING [
+        label="CONFIRM"
+    ];
+
+    SUFFICIENT -> REFUNDING [
+        label="CANCEL"
+    ];
+
+    DISPENSING -> COMPLETE [
+        label="DISPENSE_COMPLETE"
+    ];
+
+    REFUNDING -> IDLE [
+        label="REFUND_COMPLETE"
+    ];
+
+    COMPLETE -> IDLE [
+        label="RESET"
+    ];
+
+    COMPLETE [
+        shape=doublecircle,
+        fillcolor=lightgreen
+    ];
+
+    REFUNDING [
+        fillcolor=lightyellow
+    ];
+
+    DISPENSING [
+        fillcolor=lightgreen
+    ];
+}

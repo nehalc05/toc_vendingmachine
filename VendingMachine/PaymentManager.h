@@ -1,3 +1,4 @@
+
 #ifndef PAYMENTMANAGER_H
 #define PAYMENTMANAGER_H
 
@@ -8,7 +9,7 @@ private:
 public:
     PaymentManager();
 
-    void insertCoin(int amount);
+    bool insertCoin(int amount);
 
     int getBalance();
 

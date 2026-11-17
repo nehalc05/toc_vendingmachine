@@ -1,13 +1,18 @@
+
 #include "PaymentManager.h"
 
 PaymentManager::PaymentManager() {
     balance = 0;
 }
 
-void PaymentManager::insertCoin(int amount) {
+bool PaymentManager::insertCoin(int amount) {
+
     if (amount == 5 || amount == 10 || amount == 20 || amount == 50) {
         balance += amount;
+        return true;
     }
+
+    return false;
 }
 
 int PaymentManager::getBalance() {
