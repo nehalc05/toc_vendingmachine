@@ -41,7 +41,7 @@ The system uses a state-based architecture to control the vending process.
 
 ## State Transition Diagram
 
-![Vending Machine FSM](docs/vm_fsm.png)
+![Vending Machine FSM](VendingMachine/docs/vm_fsm.png)
 
 ## Project Structure
 
