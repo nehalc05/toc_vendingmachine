@@ -1,23 +1,27 @@
-
 #include <iostream>
-#include "Product.h"
+#include "PaymentManager.h"
 using namespace std;
 
 int main() {
 
-    ProductManager manager;
+    PaymentManager payment;
 
-    manager.displayProducts();
+    payment.insertCoin(20);
+    payment.insertCoin(20);
 
-    Product* selected = manager.getProduct(2);
+    cout << "Current Balance: Rs." << payment.getBalance() << endl;
 
-    if (selected != NULL) {
-        cout << "\nSelected: " << selected->name << endl;
+    if (payment.hasSufficientBalance(30)) {
+        cout << "Payment Successful!" << endl;
+        cout << "Change: Rs." << payment.calculateChange(30) << endl;
+    }
+    else {
+        cout << "Insufficient Balance!" << endl;
     }
 
-    manager.reduceStock(2);
+    payment.reset();
 
-    manager.displayProducts();
+    cout << "Balance after reset: Rs." << payment.getBalance() << endl;
 
     return 0;
 }
