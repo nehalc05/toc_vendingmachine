@@ -11,6 +11,7 @@ State Automaton::getState() {
     return currentState;
 }
 
+
 void Automaton::transition(Input input) {
 
     switch (currentState) {
@@ -41,13 +42,17 @@ void Automaton::transition(Input input) {
             break;
 
         case PAYMENT:
-            if (input == CANCEL) {
+            if (input == INSERT_5 || input == INSERT_10 ||
+                input == INSERT_20 || input == INSERT_50) {
+                cout << "Coin accepted." << endl;
+            }
+            else if (input == CONFIRM) {
+                currentState = SUFFICIENT;
+                cout << "Payment sufficient." << endl;
+            }
+            else if (input == CANCEL) {
                 currentState = REFUNDING;
                 cout << "Refund initiated." << endl;
-            }
-            else if (input == INSERT_5 || input == INSERT_10 ||
-                     input == INSERT_20 || input == INSERT_50) {
-                cout << "Coin accepted." << endl;
             }
             else {
                 cout << "Invalid action." << endl;
