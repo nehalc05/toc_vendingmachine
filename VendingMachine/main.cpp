@@ -1,25 +1,23 @@
 
 #include <iostream>
-#include "Automaton.h"
+#include "Product.h"
 using namespace std;
 
 int main() {
 
-    Automaton machine;
+    ProductManager manager;
 
-    cout << "Current State: " << machine.getState() << endl;
+    manager.displayProducts();
 
-    machine.transition(SELECT_PRODUCT);
+    Product* selected = manager.getProduct(2);
 
-    cout << "Current State: " << machine.getState() << endl;
+    if (selected != NULL) {
+        cout << "\nSelected: " << selected->name << endl;
+    }
 
-    machine.transition(INSERT_10);
+    manager.reduceStock(2);
 
-    cout << "Current State: " << machine.getState() << endl;
-
-    machine.transition(CANCEL);
-
-    cout << "Current State: " << machine.getState() << endl;
+    manager.displayProducts();
 
     return 0;
 }
